@@ -17,10 +17,18 @@ namespace BMSMS
 {
     public sealed partial class MainWindow : Window
     {
+        // List of ValueTuple holding the Navigation Tag and the relative Navigation Page
+        private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
+        {
+            ("settings", typeof(Pages.Settings)),
+            ("monitoring", typeof(Pages.Monitoring)),
+            ("logging", typeof(Pages.Logging))
+        };
+
         public MainWindow()
         {
             this.InitializeComponent();
-            //mainFrame.Navigate(typeof(Pages.Monitoring));
+            mainFrame.Navigate(typeof(Pages.Monitoring));
         }
 
         private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -31,9 +39,8 @@ namespace BMSMS
             }
             else if (args.SelectedItemContainer != null)
             {
-                mainFrame.Navigate(typeof(Pages.Monitoring));
-                //var navItemTag = args.SelectedItemContainer.Tag.ToString();
-                //NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
+                var navItemTag = args.SelectedItemContainer.Tag.ToString();
+                NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
             }
         }
 
@@ -46,19 +53,18 @@ namespace BMSMS
             }
             else
             {
-                
-                //var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
-                //_page = item.Page;
+                var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
+                _page = item.Page;
             }
             // Get the page type before navigation so you can prevent duplicate
             // entries in the backstack.
 
-            //var preNavPageType = ContentFrame.CurrentSourcePageType;
+            var preNavPageType = mainFrame.CurrentSourcePageType;
 
             // Only navigate if the selected page isn't currently loaded.
-            //if (!(_page is null) && !Type.Equals(preNavPageType, _page))
+            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
             {
-               // ContentFrame.Navigate(_page, null, transitionInfo);
+               mainFrame.Navigate(_page, null, transitionInfo);
             }
         }
     }

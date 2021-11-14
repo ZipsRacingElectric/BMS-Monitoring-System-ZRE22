@@ -8,12 +8,19 @@
     mc:Ignorable="d">
 
     <Grid>
-        <NavigationView x:Name="NavBar" PaneDisplayMode="Top" SelectionChanged="NavView_SelectionChanged">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="19*"/>
+        </Grid.RowDefinitions>
+        <NavigationView x:Name="NavBar" PaneDisplayMode="Top" SelectionChanged="NavView_SelectionChanged" Grid.Row="0">
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="monitoring" Content="Monitoring"/>
                 <NavigationViewItem Tag="logging" Content="Logging"/>
             </NavigationView.MenuItems>
         </NavigationView>
-        <Frame x:Name="mainFrame" />
+        <Frame x:Name="mainFrame" Grid.Row="1"/>
     </Grid>
 </Window>

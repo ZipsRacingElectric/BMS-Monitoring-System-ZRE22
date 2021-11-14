@@ -12,14 +12,19 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Border Background="#2f5cb6"/>
-        <Border Grid.Column="1" Background="Firebrick"/>
-        <Grid Grid.Row="0" Name="voltagesGrid" BorderBrush="Aqua" BorderThickness="2">
-
-        </Grid>
-        <Button Grid.Row="1" Click="Button_Click" Content="Click to change vals"/>
+        <Border Grid.Row="0" Background="{ThemeResource NavigationViewExpandedPaneBackground}"/>
+        <TextBlock Grid.Row="0" Text="Monitoring" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Text="Cell Voltages" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
+        <Grid Grid.Row="2" Name="voltagesGrid" BorderBrush="Aqua" BorderThickness="2" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Text="Temperature Readings" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
+        <Grid Grid.Row="4" Name="tempGrid" BorderBrush="Aqua" BorderThickness="2" HorizontalAlignment="Center"/>
+        <Button Grid.Row="5" Click="Button_Click" Content="Click to change vals"/>
     </Grid>
 </Page>

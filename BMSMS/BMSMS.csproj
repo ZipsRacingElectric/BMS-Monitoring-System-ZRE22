@@ -10,6 +10,7 @@
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="CustomControls\TemperatureCell.xaml" />
     <None Remove="CustomControls\VoltageCell.xaml" />
     <None Remove="Pages\Monitoring.xaml" />
     <None Remove="Pages\Settings.xaml" />
@@ -42,5 +43,12 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Themes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="CustomControls\TemperatureCell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

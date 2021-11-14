@@ -26,7 +26,9 @@ namespace BMSMS.Pages
     {
 
         private List<VoltageCell> voltages = new List<VoltageCell>();
+        private List<TemperatureCell> temperatures = new List<TemperatureCell>();
 
+        //For debug testing
         Random rand = new Random();
 
 
@@ -36,14 +38,14 @@ namespace BMSMS.Pages
 
             //Generate Voltage Grid Table
 
-            int numCols = 18;
-            int numRows = 5;
+            int numVoltCols = 18;
+            int numVoltRows = 5;
             int cellCounter = 0;
 
-            for (int i = 0; i < numCols; ++i)
+            for (int i = 0; i < numVoltCols; ++i)
             {
                 voltagesGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-                for (int j = 0; j < numRows; ++j)
+                for (int j = 0; j < numVoltRows; ++j)
                 {
                     voltages.Add(new VoltageCell(cellCounter));
                     voltagesGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -52,6 +54,26 @@ namespace BMSMS.Pages
 
                     voltagesGrid.Children.Add(voltages[cellCounter]);
                     ++cellCounter;
+                }
+            }
+
+            //Generate Temperature Grid
+            int numTempCols = 9;
+            int numTempRows = 5;
+            int TempCounter = 0;
+
+            for (int i = 0; i < numTempCols; ++i)
+            {
+                tempGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                for (int j = 0; j < numTempRows; ++j)
+                {
+                    temperatures.Add(new TemperatureCell(TempCounter));
+                    tempGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                    Grid.SetColumn(temperatures[TempCounter], i);
+                    Grid.SetRow(temperatures[TempCounter], j);
+
+                    tempGrid.Children.Add(temperatures[TempCounter]);
+                    ++TempCounter;
                 }
             }
         }

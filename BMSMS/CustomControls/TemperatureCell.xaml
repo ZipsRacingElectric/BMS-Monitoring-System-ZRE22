@@ -1,0 +1,15 @@
+﻿<UserControl
+    x:Class="BMSMS.CustomControls.TemperatureCell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BMSMS.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Border Name="border" Background="Green" BorderBrush="Black" BorderThickness="1">
+            <TextBlock Name="textBox" Padding="10"/>
+        </Border>
+    </Grid>
+</UserControl>
