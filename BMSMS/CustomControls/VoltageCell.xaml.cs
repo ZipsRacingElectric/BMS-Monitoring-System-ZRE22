@@ -36,12 +36,12 @@ namespace BMSMS.CustomControls
                 textBox.Text = value.ToString();
             }
         }
-        public VoltageCell(int cellNumber)
+        public VoltageCell(int cellNumber, Binding b)
         {
             this.InitializeComponent();
             CellNumber = cellNumber;
 
-            textBox.Text = $"Cell {CellNumber}";
+            textBox.SetBinding(TextBlock.TextProperty, b);
         }
 
 

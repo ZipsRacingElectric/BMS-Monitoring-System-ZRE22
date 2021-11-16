@@ -1,4 +1,5 @@
 ﻿using BMSMS.CustomControls;
+using BMSMS.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -8,6 +9,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,13 +26,15 @@ namespace BMSMS.Pages
     /// </summary>
     public sealed partial class Monitoring : Page
     {
+        public MainViewModel ViewModel => MainWindow.CurrentWindow.ViewModel;
 
-        private List<VoltageCell> voltages = new List<VoltageCell>();
+        public List<VoltageCell> voltages = new List<VoltageCell>();
         private List<TemperatureCell> temperatures = new List<TemperatureCell>();
+
+        string voltageReadings = "2";
 
         //For debug testing
         Random rand = new Random();
-
 
         public Monitoring()
         {
@@ -47,7 +51,13 @@ namespace BMSMS.Pages
                 voltagesGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
                 for (int j = 0; j < numVoltRows; ++j)
                 {
-                    voltages.Add(new VoltageCell(cellCounter));
+                    Binding b = new Binding()
+                    {
+                        Mode = BindingMode.OneWay,
+                        Source = ViewModel.StateOfCharge
+                    };
+
+                    voltages.Add(new VoltageCell(cellCounter, b));
                     voltagesGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                     Grid.SetColumn(voltages[cellCounter], i);
                     Grid.SetRow(voltages[cellCounter], j);
@@ -76,12 +86,19 @@ namespace BMSMS.Pages
                     ++TempCounter;
                 }
             }
+
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            voltages[rand.Next(voltages.Count)].Voltage = rand.Next(5);
+            voltageReadings = rand.Next(5).ToString();
         }
+
+        public void updateVoltages()
+        {
+
+        }
+
     }
 }
