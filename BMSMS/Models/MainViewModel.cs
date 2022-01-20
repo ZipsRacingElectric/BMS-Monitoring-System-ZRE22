@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Core;
 
 namespace BMSMS.Models
@@ -17,7 +13,7 @@ namespace BMSMS.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         protected bool SetProperty<T>(ref T storage, T value,
-            [CallerMemberName] String propertyName = null)
+            [CallerMemberName] string propertyName = null)
         {
             if (object.Equals(storage, value)) return false;
             storage = value;
@@ -26,14 +22,14 @@ namespace BMSMS.Models
         }
 
         private string stateOfCharge;
-        public String StateOfCharge
+        public string StateOfCharge
         {
             get { return stateOfCharge; }
             set { SetProperty(ref stateOfCharge, value); OnPropertyChanged(nameof(stateOfCharge)); }
         }
 
         private string current;
-        public String Current
+        public string Current
         {
             get { return current; }
             set { SetProperty(ref current, value); OnPropertyChanged(nameof(current)); }

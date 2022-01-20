@@ -45,9 +45,9 @@
         <TextBlock Grid.Row="1" Grid.Column="8" Name="hightemp" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
 
         <TextBlock Grid.Row="2" Grid.ColumnSpan="10" Text="Cell Voltages" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-        <Grid Grid.Row="3" Grid.ColumnSpan="10" Name="voltagesGrid" BorderBrush="Aqua" BorderThickness="2" HorizontalAlignment="Center"/>
+        <Grid Grid.Row="3" Grid.ColumnSpan="10" Name="voltagesGrid" BorderThickness="2" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="4" Grid.ColumnSpan="10" Text="Temperature Readings" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-        <Grid Grid.Row="5" Grid.ColumnSpan="10" Name="tempGrid" BorderBrush="Aqua" BorderThickness="2" HorizontalAlignment="Center"/>
-        <Button Grid.Row="6" Grid.ColumnSpan="10" Click="Button_Click" Content="Click to change vals"/>
+        <Grid Grid.Row="5" Grid.ColumnSpan="10" Name="tempGrid" BorderThickness="2" HorizontalAlignment="Center"/>
+        <!--<Button Grid.Row="6" Grid.ColumnSpan="10" Click="Button_Click" Content="Click to change vals"/>-->
     </Grid>
 </Page>
