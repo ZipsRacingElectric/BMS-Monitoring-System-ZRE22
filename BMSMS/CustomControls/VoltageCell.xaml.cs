@@ -1,5 +1,7 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media;
 
 namespace BMSMS.CustomControls
 {
@@ -7,8 +9,8 @@ namespace BMSMS.CustomControls
     {
         public int CellNumber { get; set; }
 
-        private float _voltage;
-        public float Voltage
+        private double _voltage;
+        public double Voltage
         {
             get
             {
@@ -18,16 +20,35 @@ namespace BMSMS.CustomControls
             set
             {
                 _voltage = value;
-                textBox.Text = value.ToString();
+                voltageBox.Text = value.ToString("0.000");
             }
         }
 
-        public VoltageCell(int cellNumber, Binding b)
+        private bool _isBalancing;
+        public bool IsBalancing
+        {
+            get
+            {
+                return _isBalancing;
+            }
+            set 
+            {
+                _isBalancing = value;
+                if (_isBalancing)
+                {
+                    border.Background = new SolidColorBrush(Colors.Red);
+                }
+                else
+                {
+                    border.Background = new SolidColorBrush(Colors.Green);
+                }
+            }
+        }
+
+        public VoltageCell(int cellNumber)
         {
             this.InitializeComponent();
             CellNumber = cellNumber;
-
-            textBox.SetBinding(TextBlock.TextProperty, b);
         }
     }
 }

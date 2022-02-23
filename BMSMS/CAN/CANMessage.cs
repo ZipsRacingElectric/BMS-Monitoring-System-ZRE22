@@ -68,9 +68,11 @@ namespace BMSMS.CAN
                     break;
                 case CANMessageId.FuseBlown:
                     break;
-                case CANMessageId.CellBalancing0_63:
+                case CANMessageId.CellBalancing0_35:
                     break;
-                case CANMessageId.CellBalancing64_89:
+                case CANMessageId.CellBalancing36_71:
+                    break;
+                case CANMessageId.CellBalancing72_89:
                     break;
                 case CANMessageId.Temp0_3:
                     break;

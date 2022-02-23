@@ -6,9 +6,9 @@ namespace BMSMS.CustomControls
     {
         public int ThermistorNumber { get; set; }
 
-        private float _temp;
+        private double _temp;
 
-        public float Temp
+        public double Temp
         {
             get
             {
@@ -17,7 +17,7 @@ namespace BMSMS.CustomControls
             set
             {
                 _temp = value;
-                textBox.Text = $"{value.ToString()} °C";
+                textBox.Text = value.ToString("0.00");
             }
         }
         public TemperatureCell( int thermistorNumber)
