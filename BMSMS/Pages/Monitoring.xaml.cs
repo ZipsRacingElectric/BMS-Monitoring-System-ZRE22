@@ -1,8 +1,11 @@
-﻿using BMSMS.CustomControls;
+﻿using BMSMS.Constants;
+using BMSMS.CustomControls;
 using BMSMS.Models;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 
@@ -35,15 +38,15 @@ namespace BMSMS.Pages
             int numVoltRows = 5;
             int cellCounter = 0;
 
-            for (int i = 0; i < numVoltCols; ++i)
+            for (int i = 0; i < numVoltRows; ++i)
             {
-                voltagesGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-                for (int j = 0; j < numVoltRows; ++j)
+                voltagesGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                for (int j = 0; j < numVoltCols; ++j)
                 {
                     voltages.Add(new VoltageCell(cellCounter));
-                    voltagesGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                    Grid.SetColumn(voltages[cellCounter], i);
-                    Grid.SetRow(voltages[cellCounter], j);
+                    voltagesGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                    Grid.SetColumn(voltages[cellCounter], j);
+                    Grid.SetRow(voltages[cellCounter], i);
 
                     voltagesGrid.Children.Add(voltages[cellCounter]);
                     ++cellCounter;
@@ -55,15 +58,15 @@ namespace BMSMS.Pages
             int numTempRows = 5;
             int TempCounter = 0;
 
-            for (int i = 0; i < numTempCols; ++i)
+            for (int i = 0; i < numTempRows; ++i)
             {
-                tempGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-                for (int j = 0; j < numTempRows; ++j)
+                tempGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                for (int j = 0; j < numTempCols; ++j)
                 {
                     temperatures.Add(new TemperatureCell(TempCounter));
-                    tempGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                    Grid.SetColumn(temperatures[TempCounter], i);
-                    Grid.SetRow(temperatures[TempCounter], j);
+                    tempGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });                   
+                    Grid.SetColumn(temperatures[TempCounter], j);
+                    Grid.SetRow(temperatures[TempCounter], i);
 
                     tempGrid.Children.Add(temperatures[TempCounter]);
                     ++TempCounter;
@@ -83,17 +86,66 @@ namespace BMSMS.Pages
         }
         void dispatcherTimer_Tick(object sender, object e)
         {
+            double totalVoltage = 0;
+            double highestTemp = -99;
+            double lowestVoltage = 99;
 
             for (int i = 0; i < MainViewModel.totalCells; ++i)
             {
                 voltages[i].Voltage = ViewModel.CellVoltages[i];
                 voltages[i].IsBalancing = Convert.ToBoolean(ViewModel.CellBalancing[i]);
+
+                totalVoltage += ViewModel.CellVoltages[i];
+
+                if (voltages[i].Voltage < lowestVoltage)
+                {
+                    lowestVoltage = voltages[i].Voltage;
+                }
             }
 
             for (int i = 0; i < MainViewModel.totalThermistors; ++i)
             {
-                temperatures[i].Temp = ViewModel.Temperatures[i];
+                if(ViewModel.Temperatures[i] != MainViewModel.thermistorOffset)
+                {
+                    temperatures[i].Temp = ViewModel.Temperatures[i];
+                }
+                else
+                {
+                    temperatures[i].Temp = 0.00;
+                }
+
+                if (ViewModel.Temperatures[i] > highestTemp && ViewModel.Temperatures[i] != MainViewModel.thermistorOffset) //TODO: remove the offset check
+                {
+                    highestTemp = ViewModel.Temperatures[i];
+                }
             }
+
+            soc.Text = $"{ViewModel.stateOfCharge.ToString("0.00")} %";
+            current.Text = $"{ViewModel.current.ToString("0.00")} A";
+            voltage.Text = $"{totalVoltage.ToString("0.00")} V";
+            lowVoltage.Text = $"{lowestVoltage.ToString("0.00")} V";
+            hightemp.Text = $"{highestTemp.ToString("0.00")} °C";
+
+            if (ViewModel.ToolConnected)
+            {
+                if (ViewModel.MessageReceived)
+                {
+                    status.Foreground = new SolidColorBrush(Colors.Green);
+                    status.Text = CANToolState.Active;
+                }
+                else
+                {
+                    status.Foreground = new SolidColorBrush(Colors.Yellow);
+                    status.Text = CANToolState.Stale;
+                }
+            }
+            else
+            {
+                status.Foreground = new SolidColorBrush(Colors.Red);
+                status.Text = CANToolState.Disconnected;
+            }
+
+            ViewModel.MessageReceived = false;
         }
     }
 }

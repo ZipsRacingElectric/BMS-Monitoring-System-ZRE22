@@ -36,12 +36,7 @@ namespace BMSMS.CAN
                 {
                     case Canlib.canStatus.canOK:
                         handleCANMessage(tempMsg);
-                        //MainWindow.CurrentWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal,
-                            //() => { 
-                            //    MainWindow.CurrentWindow.ViewModel.StateOfCharge = $"{(tempMsg.data[4] << 8 | tempMsg.data[3])/10000f} %";
-                            //    MainWindow.CurrentWindow.ViewModel.Current = $"{tempMsg.data[0] / 10000f} A";
-                            //}
-                        //);
+                        MainWindow.CurrentWindow.ViewModel.MessageReceived = true;
                         //TODO: Add DB storing here
                         break;
 
@@ -54,6 +49,7 @@ namespace BMSMS.CAN
                         Debug.WriteLine("Connection to device has been interrupted. Attempting to reconnect...");
                         Canlib.canBusOff(handle);
                         Canlib.canClose(handle);
+                        MainWindow.CurrentWindow.ViewModel.ToolConnected = false;
                         handle = getPhysicalDevice();
                         break;
 
@@ -92,6 +88,9 @@ namespace BMSMS.CAN
                         // Next, take the channel on bus using the canBusOn method. This
                         // needs to be done before we can send a message.
                         status = Canlib.canBusOn(handle);
+
+                        MainWindow.CurrentWindow.ViewModel.ToolConnected = true;
+
                         return handle;
                     }
                 }
@@ -429,7 +428,9 @@ namespace BMSMS.CAN
                     MainWindow.CurrentWindow.ViewModel.Temperatures[44] = (message.data[6] << 8 | message.data[7]) / 10000f * MainViewModel.thermistorScale + MainViewModel.thermistorOffset;
                     break;
                 case CANMessageId.AccumulatorData:
-                    MainWindow.CurrentWindow.ViewModel.StateOfCharge = (message.data[0] << 8 | message.data[1]) / 10f;
+                    MainWindow.CurrentWindow.ViewModel.stateOfCharge = (message.data[1] << 8 | message.data[0]) / 10f;
+                    // cs lo reading
+                    MainWindow.CurrentWindow.ViewModel.current = (sbyte)(message.data[5] << 8 | message.data[4]) / 10f;
                     break;
                 default:
                     break;

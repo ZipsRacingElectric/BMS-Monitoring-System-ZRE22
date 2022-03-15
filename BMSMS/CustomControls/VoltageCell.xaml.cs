@@ -36,11 +36,14 @@ namespace BMSMS.CustomControls
                 _isBalancing = value;
                 if (_isBalancing)
                 {
-                    border.Background = new SolidColorBrush(Colors.Red);
+                    border.Background = new SolidColorBrush(Colors.Aqua);
+                    voltageBox.Foreground = new SolidColorBrush(Colors.Black);
                 }
                 else
                 {
                     border.Background = new SolidColorBrush(Colors.Green);
+                    voltageBox.Foreground = new SolidColorBrush(Colors.White);
+
                 }
             }
         }

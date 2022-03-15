@@ -9,15 +9,17 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -29,24 +31,30 @@
             <RowDefinition Height="25*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="10" Background="{ThemeResource NavigationViewExpandedPaneBackground}"/>
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="10" Text="Accumulator Data" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="Bold"/>
+        <Border Grid.Row="0" Grid.ColumnSpan="12" Background="{ThemeResource NavigationViewExpandedPaneBackground}"/>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="12" Text="Accumulator Data" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="Bold"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="SoC:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Name="soc" Text="{x:Bind ViewModel.StateOfCharge, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="CAN Status:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Name="status" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
         
-        <TextBlock Grid.Row="1" Grid.Column="3" Text="Current:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-        <TextBlock Grid.Row="1" Grid.Column="4" Name="current" Text="{x:Bind ViewModel.Current, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="SoC:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="3" Name="soc" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        
+        <TextBlock Grid.Row="1" Grid.Column="4" Text="Current:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="5" Name="current" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="5" Text="Voltage:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-        <TextBlock Grid.Row="1" Grid.Column="6" Name="voltage" Text="{x:Bind ViewModel.TotalVoltage, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="6" Text="Voltage:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="7" Name="voltage" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
 
-        <TextBlock Grid.Row="1" Grid.Column="7" Text="Highest Temp:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-        <TextBlock Grid.Row="1" Grid.Column="8" Name="hightemp" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="8" Text="Lowest Voltage:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="9" Name="lowVoltage" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        
+        <TextBlock Grid.Row="1" Grid.Column="10" Text="Highest Temp:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="11" Name="hightemp" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
 
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="10" Text="Cell Voltages (V)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-        <Grid Grid.Row="3" Grid.ColumnSpan="10" Name="voltagesGrid" BorderThickness="2" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="4" Grid.ColumnSpan="10" Text="Temperature Readings (°C)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-        <Grid Grid.Row="5" Grid.ColumnSpan="10" Name="tempGrid" BorderThickness="2" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="12" Text="Cell Voltages (V)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
+        <Grid Grid.Row="3" Grid.ColumnSpan="12" Name="voltagesGrid" BorderThickness="2" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="4" Grid.ColumnSpan="12" Text="Temperature Readings (°C)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
+        <Grid Grid.Row="5" Grid.ColumnSpan="12" Name="tempGrid" BorderThickness="2" HorizontalAlignment="Center"/>
     </Grid>
 </Page>
