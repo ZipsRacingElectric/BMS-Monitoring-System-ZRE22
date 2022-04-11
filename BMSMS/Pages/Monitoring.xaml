@@ -24,7 +24,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="25*"/>
             <RowDefinition Height="7*"/>
@@ -35,7 +36,7 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="12" Text="Accumulator Data" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="Bold"/>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="CAN Status:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Name="status" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Name="status" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
         
         <TextBlock Grid.Row="1" Grid.Column="2" Text="SoC:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
         <TextBlock Grid.Row="1" Grid.Column="3" Name="soc" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
@@ -52,9 +53,24 @@
         <TextBlock Grid.Row="1" Grid.Column="10" Text="Highest Temp:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
         <TextBlock Grid.Row="1" Grid.Column="11" Name="hightemp" Text="" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
 
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="12" Text="Cell Voltages (V)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-        <Grid Grid.Row="3" Grid.ColumnSpan="12" Name="voltagesGrid" BorderThickness="2" HorizontalAlignment="Center"/>
-        <TextBlock Grid.Row="4" Grid.ColumnSpan="12" Text="Temperature Readings (°C)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
-        <Grid Grid.Row="5" Grid.ColumnSpan="12" Name="tempGrid" BorderThickness="2" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Temp Fault:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Name="tempFault" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Text="Voltage Fault:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="2" Grid.Column="4" Name="voltageFault" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="5" Text="Self-Test:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="2" Grid.Column="6" Name="selfTest" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="8" Text="Over Current Test:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="2" Grid.Column="9" Name="overCurrent" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="10" Text="Sense Line Test:" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+        <TextBlock Grid.Row="2" Grid.Column="11" Name="senseOverCurrent" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="12" Text="Cell Voltages (V)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
+        <Grid Grid.Row="4" Grid.ColumnSpan="12" Name="voltagesGrid" BorderThickness="2" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="5" Grid.ColumnSpan="12" Text="Temperature Readings (°C)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold"/>
+        <Grid Grid.Row="6" Grid.ColumnSpan="12" Name="tempGrid" BorderThickness="2" HorizontalAlignment="Center"/>
     </Grid>
 </Page>

@@ -9,6 +9,28 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock Text="LOGGING" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Name="myScrollViewer" Grid.Row="0">
+            <TextBox Name="log" AcceptsReturn="True" FontFamily="Consolas" Margin="5" ScrollViewer.VerticalScrollMode="Auto" TextWrapping="Wrap" Text="" IsReadOnly="True" />
+        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Name="pause" Grid.Row="0" Grid.Column="0" Click="onPause">Pause</Button>
+            <Button Name="clear" Grid.Row="0" Grid.Column="1" Click="onClear">Clear</Button>
+            <Button Name="export" Grid.Row="0" Grid.Column="2" Click="onExport">Export</Button>
+        </Grid>
     </Grid>
 </Page>

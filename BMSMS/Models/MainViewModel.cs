@@ -11,12 +11,13 @@ namespace BMSMS.Models
         public static int totalCells = 90;
         public static int totalThermistors = 45;
 
-        public static double thermistorScale = -33.303;
-        public static double thermistorOffset = 76.311;
+        public static double thermistorScale = -21.933;
+        public static double thermistorOffset = 81.29697;
 
         public double stateOfCharge;
 
         public double current;
+        public double highCurrent;
 
         public double totalVoltage;
 
@@ -34,5 +35,12 @@ namespace BMSMS.Models
 
         public bool MessageReceived = false;
 
+        public bool voltageFault = false;
+        public bool tempFault = false;
+        public bool selfTestFail = false;
+        public bool overCurrent = false;
+        public bool senseLineOverCurrent = false;
+
+        public string Log = "";
     }
 }

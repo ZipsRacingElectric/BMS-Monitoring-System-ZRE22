@@ -31,20 +31,20 @@ namespace BMSMS.CAN
                 // will be written to the output parameters. If no message is
                 // received, it will return canERR_NOMSG.
                 
-                status = Canlib.canReadWait(handle, out tempMsg.id, tempMsg.data, out tempMsg.dlc, out tempMsg.flags, out tempMsg.timestamp, 100); //Should the timeout be changed?
+                status = Canlib.canReadWait(handle, out tempMsg.id, tempMsg.data, out tempMsg.dlc, out tempMsg.flags, out tempMsg.timestamp, 100); // should the timeout be changed?
                 switch (status)
                 {
                     case Canlib.canStatus.canOK:
                         handleCANMessage(tempMsg);
                         MainWindow.CurrentWindow.ViewModel.MessageReceived = true;
-                        //TODO: Add DB storing here
+                        MainWindow.CurrentWindow.ViewModel.Log += $"ID: 0x{tempMsg.id.ToString("X3")}     Message: {tempMsg.data[0].ToString("X2")} {tempMsg.data[1]} {tempMsg.data[2]} {tempMsg.data[3]} {tempMsg.data[4]} {tempMsg.data[5]} {tempMsg.data[6]} {tempMsg.data[7]}\n";
                         break;
 
                     case Canlib.canStatus.canERR_NOMSG:
                         //TODO: Add Error handling
                         break;
 
-                    //Lost connection to device
+                    // lost connection to device
                     case Canlib.canStatus.canERR_HARDWARE:
                         Debug.WriteLine("Connection to device has been interrupted. Attempting to reconnect...");
                         Canlib.canBusOff(handle);
@@ -429,8 +429,14 @@ namespace BMSMS.CAN
                     break;
                 case CANMessageId.AccumulatorData:
                     MainWindow.CurrentWindow.ViewModel.stateOfCharge = (message.data[1] << 8 | message.data[0]) / 10f;
-                    // cs lo reading
-                    MainWindow.CurrentWindow.ViewModel.current = (sbyte)(message.data[5] << 8 | message.data[4]) / 10f;
+                    
+                    MainWindow.CurrentWindow.ViewModel.current = (sbyte)(message.data[5] << 8 | message.data[4]) / 10f; // cs low reading
+                    MainWindow.CurrentWindow.ViewModel.highCurrent = (sbyte)(message.data[3] << 8 | message.data[2]) / 10f; // cs high reading
+                    MainWindow.CurrentWindow.ViewModel.tempFault = Convert.ToBoolean((message.data[6] >> 0) & 0b1);
+                    MainWindow.CurrentWindow.ViewModel.voltageFault = Convert.ToBoolean((message.data[6] >> 1) & 0b1);
+                    MainWindow.CurrentWindow.ViewModel.selfTestFail = Convert.ToBoolean((message.data[6] >> 2) & 0b1);
+                    MainWindow.CurrentWindow.ViewModel.overCurrent = Convert.ToBoolean((message.data[6] >> 3) & 0b1);
+                    MainWindow.CurrentWindow.ViewModel.senseLineOverCurrent = Convert.ToBoolean((message.data[6] >> 4) & 0b1);
                     break;
                 default:
                     break;

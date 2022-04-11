@@ -31,6 +31,7 @@ namespace BMSMS
             CANListener listener = new CANListener() { };
 
             Thread t1 = new(listener.ListenAsync);
+            t1.IsBackground = true;
             t1.Start();
 
             mainFrame.Navigate(typeof(Pages.Monitoring));

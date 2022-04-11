@@ -33,6 +33,7 @@ namespace BMSMS
         public App()
         {
             this.InitializeComponent();
+            App.Current.RequestedTheme = ApplicationTheme.Dark;
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace BMSMS.Pages
     /// </summary>
     public sealed partial class Monitoring : Page
     {
-        public MainViewModel ViewModel => MainWindow.CurrentWindow.ViewModel;
+        private MainViewModel ViewModel => MainWindow.CurrentWindow.ViewModel;
 
         public List<VoltageCell> voltages = new List<VoltageCell>();
         private List<TemperatureCell> temperatures = new List<TemperatureCell>();
@@ -74,7 +74,7 @@ namespace BMSMS.Pages
             }
         }
 
-        public void DispatcherTimerSetup()
+        private void DispatcherTimerSetup()
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
@@ -84,7 +84,8 @@ namespace BMSMS.Pages
             dispatcherTimer.Start();
             //IsEnabled should now be true after calling start
         }
-        void dispatcherTimer_Tick(object sender, object e)
+
+        private void dispatcherTimer_Tick(object sender, object e)
         {
             double totalVoltage = 0;
             double highestTemp = -99;
@@ -143,6 +144,61 @@ namespace BMSMS.Pages
             {
                 status.Foreground = new SolidColorBrush(Colors.Red);
                 status.Text = CANToolState.Disconnected;
+            }
+
+            if(ViewModel.tempFault)
+            {
+                tempFault.Foreground = new SolidColorBrush(Colors.Red);
+                tempFault.Text = "FAIL";
+            }
+            else
+            {
+                tempFault.Foreground = new SolidColorBrush(Colors.Green);
+                tempFault.Text = "PASS";
+            }
+
+            if (ViewModel.voltageFault)
+            {
+                voltageFault.Foreground = new SolidColorBrush(Colors.Red);
+                voltageFault.Text = "FAIL";
+            }
+            else
+            {
+                voltageFault.Foreground = new SolidColorBrush(Colors.Green);
+                voltageFault.Text = "PASS";
+            }
+
+            if (ViewModel.selfTestFail)
+            {
+                selfTest.Foreground = new SolidColorBrush(Colors.Red);
+                selfTest.Text = "FAIL";
+            }
+            else
+            {
+                selfTest.Foreground = new SolidColorBrush(Colors.Green);
+                selfTest.Text = "PASS";
+            }
+
+            if (ViewModel.overCurrent)
+            {
+                overCurrent.Foreground = new SolidColorBrush(Colors.Red);
+                overCurrent.Text = "FAIL";
+            }
+            else
+            {
+                overCurrent.Foreground = new SolidColorBrush(Colors.Green);
+                overCurrent.Text = "PASS";
+            }
+
+            if (ViewModel.senseLineOverCurrent)
+            {
+                senseOverCurrent.Foreground = new SolidColorBrush(Colors.Red);
+                senseOverCurrent.Text = "FAIL";
+            }
+            else
+            {
+                senseOverCurrent.Foreground = new SolidColorBrush(Colors.Green);
+                senseOverCurrent.Text = "PASS";
             }
 
             ViewModel.MessageReceived = false;
