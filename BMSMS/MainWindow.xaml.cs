@@ -17,9 +17,7 @@ namespace BMSMS
         // List of ValueTuple holding the Navigation Tag and the relative Navigation Page
         private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
         {
-            ("settings", typeof(Pages.Settings)),
-            ("monitoring", typeof(Pages.Monitoring)),
-            ("logging", typeof(Pages.Logging))
+            ("monitoring", typeof(Pages.Monitoring))
         };
 
         public MainWindow()
@@ -35,43 +33,6 @@ namespace BMSMS
             t1.Start();
 
             mainFrame.Navigate(typeof(Pages.Monitoring));
-        }
-
-        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        {
-            if (args.IsSettingsSelected == true)
-            {
-                NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
-            }
-            else if (args.SelectedItemContainer != null)
-            {
-                var navItemTag = args.SelectedItemContainer.Tag.ToString();
-                NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
-            }
-        }
-
-        private void NavView_Navigate(string navItemTag, Microsoft.UI.Xaml.Media.Animation.NavigationTransitionInfo transitionInfo)
-        {
-            Type _page = null;
-            if (navItemTag == "settings")
-            {
-                _page = typeof(Pages.Settings);
-            }
-            else
-            {
-                var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
-                _page = item.Page;
-            }
-            // Get the page type before navigation so you can prevent duplicate
-            // entries in the backstack.
-
-            var preNavPageType = mainFrame.CurrentSourcePageType;
-
-            // Only navigate if the selected page isn't currently loaded.
-            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
-            {
-               mainFrame.Navigate(_page, null, transitionInfo);
-            }
         }
     }
 }

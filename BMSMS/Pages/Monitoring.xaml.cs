@@ -103,10 +103,10 @@ namespace BMSMS.Pages
                     lowestVoltage = voltages[i].Voltage;
                 }
             }
-
+            List<int> demoThermistors = new List<int>{ 0, 1, 4, 7, 9, 10 };
             for (int i = 0; i < MainViewModel.totalThermistors; ++i)
             {
-                if(ViewModel.Temperatures[i] != MainViewModel.thermistorOffset)
+                if(demoThermistors.Contains(i)) //TODO: Remove after demo
                 {
                     temperatures[i].Temp = ViewModel.Temperatures[i];
                 }
@@ -115,7 +115,7 @@ namespace BMSMS.Pages
                     temperatures[i].Temp = 0.00;
                 }
 
-                if (ViewModel.Temperatures[i] > highestTemp && ViewModel.Temperatures[i] != MainViewModel.thermistorOffset) //TODO: remove the offset check
+                if (ViewModel.Temperatures[i] > highestTemp && demoThermistors.Contains(i)) //TODO: remove the offset check
                 {
                     highestTemp = ViewModel.Temperatures[i];
                 }

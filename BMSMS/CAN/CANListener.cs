@@ -37,7 +37,6 @@ namespace BMSMS.CAN
                     case Canlib.canStatus.canOK:
                         handleCANMessage(tempMsg);
                         MainWindow.CurrentWindow.ViewModel.MessageReceived = true;
-                        MainWindow.CurrentWindow.ViewModel.Log += $"ID: 0x{tempMsg.id.ToString("X3")}     Message: {tempMsg.data[0].ToString("X2")} {tempMsg.data[1]} {tempMsg.data[2]} {tempMsg.data[3]} {tempMsg.data[4]} {tempMsg.data[5]} {tempMsg.data[6]} {tempMsg.data[7]}\n";
                         break;
 
                     case Canlib.canStatus.canERR_NOMSG:

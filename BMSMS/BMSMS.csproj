@@ -14,7 +14,6 @@
     <None Remove="CustomControls\TemperatureCell.xaml" />
     <None Remove="CustomControls\VoltageCell.xaml" />
     <None Remove="Pages\Monitoring.xaml" />
-    <None Remove="Pages\Settings.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,12 +21,6 @@
     <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.4" />
     <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.4" />
     <Manifest Include="$(ApplicationManifest)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Pages\Settings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ItemGroup>

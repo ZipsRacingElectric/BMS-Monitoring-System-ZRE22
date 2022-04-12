@@ -40,7 +40,5 @@ namespace BMSMS.Models
         public bool selfTestFail = false;
         public bool overCurrent = false;
         public bool senseLineOverCurrent = false;
-
-        public string Log = "";
     }
 }
