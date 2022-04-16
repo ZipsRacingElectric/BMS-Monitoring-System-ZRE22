@@ -33,6 +33,8 @@ namespace BMSMS.Models
 
         public bool ToolConnected = false;
 
+        public bool IsPaused = true;
+
         public bool MessageReceived = false;
 
         public bool voltageFault = false;

@@ -31,7 +31,6 @@ namespace BMSMS.Pages
         private MainViewModel ViewModel => MainWindow.CurrentWindow.ViewModel;
 
         public int counter = 0;
-        private bool isPaused = false;
 
         public Logging()
         {
@@ -59,7 +58,7 @@ namespace BMSMS.Pages
 
         private void dispatcherTimer_Tick(object sender, object e)
         {
-            if (!isPaused)
+            if (!ViewModel.IsPaused)
             {
                 updateLog();
             }
@@ -67,8 +66,8 @@ namespace BMSMS.Pages
 
         private void onPause(object sender, RoutedEventArgs e)
         {
-            isPaused = !isPaused;
-            if (isPaused)
+            ViewModel.IsPaused = !ViewModel.IsPaused;
+            if (ViewModel.IsPaused)
             {
                 pause.Content = "Play";
             }

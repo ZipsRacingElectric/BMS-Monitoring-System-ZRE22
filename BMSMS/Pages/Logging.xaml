@@ -10,7 +10,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"/>
@@ -28,7 +28,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Name="pause" Grid.Row="0" Grid.Column="0" Click="onPause">Pause</Button>
+            <Button Name="pause" Grid.Row="0" Grid.Column="0" Click="onPause">Play</Button>
             <Button Name="clear" Grid.Row="0" Grid.Column="1" Click="onClear">Clear</Button>
             <Button Name="export" Grid.Row="0" Grid.Column="2" Click="onExport">Export</Button>
         </Grid>

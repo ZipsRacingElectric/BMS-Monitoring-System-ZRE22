@@ -9,7 +9,7 @@
   <Identity
     Name="475adc2c-a721-4fa2-b25a-072aefbcf044"
     Publisher="CN=BMSMS"
-    Version="1.0.14.0" />
+    Version="1.0.25.0" />
 
   <Properties>
     <DisplayName>BMSMS (Package)</DisplayName>
