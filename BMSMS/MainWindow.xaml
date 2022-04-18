@@ -12,10 +12,10 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="19*"/>
         </Grid.RowDefinitions>
-        <NavigationView x:Name="NavBar" PaneDisplayMode="Top" SelectionChanged="NavView_SelectionChanged" Grid.Row="0">
+        <NavigationView Background="#2d2d2d" x:Name="NavBar" PaneDisplayMode="Top" SelectionChanged="NavView_SelectionChanged" Grid.Row="0">
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="monitoring" Content="Monitoring"/>
                 <NavigationViewItem Tag="logging" Content="Logging"/>

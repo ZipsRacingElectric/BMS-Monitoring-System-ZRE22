@@ -39,11 +39,15 @@ namespace BMSMS.CustomControls
                     border.Background = new SolidColorBrush(Colors.Aqua);
                     voltageBox.Foreground = new SolidColorBrush(Colors.Black);
                 }
-                else
+                else if (_voltage != 0)
                 {
                     border.Background = new SolidColorBrush(Colors.Green);
                     voltageBox.Foreground = new SolidColorBrush(Colors.White);
 
+                }
+                else
+                {
+                    border.Background = new SolidColorBrush(Colors.Gray);
                 }
             }
         }

@@ -9,11 +9,11 @@
   <Identity
     Name="475adc2c-a721-4fa2-b25a-072aefbcf044"
     Publisher="CN=BMSMS"
-    Version="1.0.25.0" />
+    Version="1.0.29.0" />
 
   <Properties>
-    <DisplayName>BMSMS (Package)</DisplayName>
-    <PublisherDisplayName>Derek</PublisherDisplayName>
+    <DisplayName>BMS Monitoring System</DisplayName>
+    <PublisherDisplayName>Derek Dunn</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -31,13 +31,16 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="BMSMS (Package)"
-        Description="BMSMS (Package)"
+        DisplayName="BMS Monitoring System"
+        Description="Zips Racing Electric BMS Monitoring Tool"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png" />
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
+        <uap:LockScreen BadgeLogo="Images\BadgeLogo.png" Notification="badge"/>
       </uap:VisualElements>
     </Application>
   </Applications>

@@ -9,28 +9,37 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="9*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Name="myScrollViewer" Grid.Row="0">
-            <TextBox Name="log" AcceptsReturn="True" FontFamily="Consolas" Margin="5" ScrollViewer.VerticalScrollMode="Auto" TextWrapping="Wrap" Text="" IsReadOnly="True" />
-        </ScrollViewer>
-        <Grid Grid.Row="1">
+        <Grid HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
-            <Button Name="pause" Grid.Row="0" Grid.Column="0" Click="onPause">Play</Button>
-            <Button Name="clear" Grid.Row="0" Grid.Column="1" Click="onClear">Clear</Button>
-            <Button Name="export" Grid.Row="0" Grid.Column="2" Click="onExport">Export</Button>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button Name="selectLogFile" Grid.Row="0" Grid.Column="0" Click="chooseLog">Select Log File</Button>
+                <Button Name="clear" Grid.Row="0" Grid.Column="4" Click="onClear">Clear</Button>
+                <Button Name="pause" Grid.Row="0" Grid.Column="2" Click="onPause">Pause</Button>
+            </Grid>
+            <ScrollViewer Name="myScrollViewer" Grid.Row="1" Width="Auto" HorizontalAlignment="Center">
+                <TextBox Name="log" AcceptsReturn="True" FontFamily="Consolas" Margin="5" ScrollViewer.VerticalScrollMode="Auto" TextWrapping="Wrap" Text="" IsReadOnly="True" />
+            </ScrollViewer>
         </Grid>
+        <TextBlock Grid.Row="1" Name="warning" Text="No file selected. Log is not being saved!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" />
     </Grid>
 </Page>

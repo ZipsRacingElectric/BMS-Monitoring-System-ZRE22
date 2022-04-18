@@ -25,14 +25,21 @@ namespace BMSMS
         public MainWindow()
         {
             this.InitializeComponent();
-
+            this.Title = "Zips Racing Electric BMS Monitoring System";
             CurrentWindow = this;
 
-            CANListener listener = new CANListener() { };
+            CANListener listener = new();
+            LogWriter logWriter = new();
 
+            // start can listener
             Thread t1 = new(listener.ListenAsync);
             t1.IsBackground = true;
             t1.Start();
+
+            // start log writer
+            Thread t2 = new(logWriter.WriteHandlerAsync);
+            t2.IsBackground = true;
+            t2.Start();
 
             mainFrame.Navigate(typeof(Pages.Monitoring));
         }

@@ -7,7 +7,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
 using System;
+using BMSMS.Utilities;
 using System.Collections.Generic;
+using System.Drawing;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -19,6 +21,7 @@ namespace BMSMS.Pages
     /// </summary>
     public sealed partial class Monitoring : Page
     {
+        private ColorGradient tempGradient = new ColorGradient(0, 60, Color.Green, Color.Red, 255, false);
         private MainViewModel ViewModel => MainWindow.CurrentWindow.ViewModel;
 
         public List<VoltageCell> voltages = new List<VoltageCell>();
@@ -78,18 +81,20 @@ namespace BMSMS.Pages
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,250);
 
             //IsEnabled defaults to false
             dispatcherTimer.Start();
             //IsEnabled should now be true after calling start
         }
 
+        public int test = 0;
         private void dispatcherTimer_Tick(object sender, object e)
         {
             double totalVoltage = 0;
             double highestTemp = -99;
             double lowestVoltage = 99;
+            double highestVoltage = -99;
 
             for (int i = 0; i < MainViewModel.totalCells; ++i)
             {
@@ -102,6 +107,11 @@ namespace BMSMS.Pages
                 {
                     lowestVoltage = voltages[i].Voltage;
                 }
+
+                if (voltages[i].Voltage > highestVoltage && i < 36) //TODO: Remove the lt check after demo
+                {
+                    highestVoltage = voltages[i].Voltage;
+                }
             }
 
             List<int> demoThermistors = new List<int> { 0, 1, 4, 9, 10, 12, 13 };
@@ -109,7 +119,8 @@ namespace BMSMS.Pages
             {
                 if (demoThermistors.Contains(i)) //TODO: Remove after demo
                 {
-                    temperatures[i].Temp = ViewModel.Temperatures[i];
+                    //temperatures[i].Temp = ViewModel.Temperatures[i];
+                    temperatures[i].Temp = temperatures[i].Temp;
                 }
                 else
                 {
@@ -126,7 +137,10 @@ namespace BMSMS.Pages
             current.Text = $"{ViewModel.current.ToString("0.00")} A";
             voltage.Text = $"{totalVoltage.ToString("0.00")} V";
             lowVoltage.Text = $"{lowestVoltage.ToString("0.00")} V";
+            highVoltage.Text = $"{highestVoltage.ToString("0.00")} V";
+            delta.Text = $"{(highestVoltage - lowestVoltage).ToString("0.00")} V";
             hightemp.Text = $"{highestTemp.ToString("0.00")} °C";
+            hightemp.Foreground = new SolidColorBrush(tempGradient.getCurrentColor(highestTemp));
 
             if (ViewModel.ToolConnected)
             {

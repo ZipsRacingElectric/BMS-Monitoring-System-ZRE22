@@ -1,19 +1,8 @@
 ﻿using BMSMS.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,14 +24,40 @@ namespace BMSMS.Pages
         public Logging()
         {
             this.InitializeComponent();
+            if (ViewModel.IsPaused == true)
+            {
+                pause.Content = "Play";
+            }
+            else
+            {
+                pause.Content = "Pause";
+            }
+            log.Text = ViewModel.StaticLog;
+            if(ViewModel.logFile == null)
+            {
+                warning.Text = "No file selected. Log is not being saved!";
+            }
+            else
+            {
+                warning.Text = $"Log writing to: {ViewModel.logFile.Path}";
+            }
 
             DispatcherTimerSetup();
         }
 
         private void updateLog()
         {
-            log.Text = ViewModel.Log;
-            myScrollViewer.ScrollToVerticalOffset(myScrollViewer.ScrollableHeight);
+            ViewModel.StaticLog = "====================================================================\n" +
+                             "|   ID   |   D0 D1 D2 D3 D4 D5 D6 D7   |   Delta   |   Timestamp   |\n" +
+                             "====================================================================";
+            foreach (var message in ViewModel.CanMessages)
+            {
+                ViewModel.StaticLog += $"\n   0x{message.Value.id:X3}     {message.Value.data[0]:X2} {message.Value.data[1]:X2} {message.Value.data[2]:X2} {message.Value.data[3]:X2} {message.Value.data[4]:X2} {message.Value.data[5]:X2} {message.Value.data[6]:X2} {message.Value.data[7]:X2}    {message.Value.deltaTime}   {message.Value.timestamp}";
+            }
+
+            ViewModel.StaticLog += "\n====================================================================";
+
+            log.Text = ViewModel.StaticLog;
         }
 
         private void DispatcherTimerSetup()
@@ -79,11 +94,15 @@ namespace BMSMS.Pages
 
         private void onClear(object sender, RoutedEventArgs e)
         {
-            ViewModel.Log = "";
-            log.Text = "";
+            ViewModel.StaticLog = "====================================================================\n" +
+                             "|   ID   |   D0 D1 D2 D3 D4 D5 D6 D7   |   Delta   |   Timestamp   |\n" +
+                             "====================================================================" +
+                             "\n====================================================================";
+
+            log.Text = ViewModel.StaticLog;
         }
 
-        private async void onExport(object sender, RoutedEventArgs e)
+        private async void chooseLog(object sender, RoutedEventArgs e)
         { 
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(MainWindow.CurrentWindow);
 
@@ -94,7 +113,11 @@ namespace BMSMS.Pages
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
             Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
 
-            await Windows.Storage.FileIO.WriteTextAsync(file, ViewModel.Log);
+            ViewModel.logFile = file;
+            if (file != null)
+            {
+                warning.Text = $"Log writing to: {ViewModel.logFile.Path}";
+            }
         }
     }
 }

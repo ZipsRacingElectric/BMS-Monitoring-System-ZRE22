@@ -1,5 +1,7 @@
-﻿using BMSMS.Constants;
+﻿using BMSMS.CAN;
+using BMSMS.Constants;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Core;
@@ -33,7 +35,7 @@ namespace BMSMS.Models
 
         public bool ToolConnected = false;
 
-        public bool IsPaused = true;
+        public bool IsPaused = false;
 
         public bool MessageReceived = false;
 
@@ -44,5 +46,10 @@ namespace BMSMS.Models
         public bool senseLineOverCurrent = false;
 
         public string Log = "";
+        public string StaticLog = "";
+
+        public Windows.Storage.StorageFile logFile = null;
+
+        public SortedDictionary<int, CANMessage> CanMessages = new SortedDictionary<int, CANMessage>();
     }
 }

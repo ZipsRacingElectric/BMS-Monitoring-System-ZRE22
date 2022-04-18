@@ -9,8 +9,7 @@ namespace BMSMS.CAN
 {
     public class CANListener
     {
-        private float[] voltages = new float[90];
-        public async void ListenAsync()
+        public void ListenAsync()
         {
             int handle;
 
@@ -37,8 +36,18 @@ namespace BMSMS.CAN
                     case Canlib.canStatus.canOK:
                         handleCANMessage(tempMsg);
                         MainWindow.CurrentWindow.ViewModel.MessageReceived = true;
-                        if(!MainWindow.CurrentWindow.ViewModel.IsPaused)
-                            MainWindow.CurrentWindow.ViewModel.Log += $"Timestamp: {DateTime.Now}    ID: 0x{tempMsg.id.ToString("X3")}     Message: {tempMsg.data[0].ToString("X2")} {tempMsg.data[1]} {tempMsg.data[2]} {tempMsg.data[3]} {tempMsg.data[4]} {tempMsg.data[5]} {tempMsg.data[6]} {tempMsg.data[7]}\n";
+                        if(MainWindow.CurrentWindow.ViewModel.CanMessages.ContainsKey(tempMsg.id))
+                        {
+                            tempMsg.deltaTime = tempMsg.timestamp - MainWindow.CurrentWindow.ViewModel.CanMessages[tempMsg.id].timestamp;
+                            MainWindow.CurrentWindow.ViewModel.CanMessages[tempMsg.id] = tempMsg;
+                        }
+                        else
+                        {
+                            tempMsg.deltaTime = 0;
+                            MainWindow.CurrentWindow.ViewModel.CanMessages.Add(tempMsg.id, tempMsg);
+                        }
+                        if(MainWindow.CurrentWindow.ViewModel.logFile != null)
+                            MainWindow.CurrentWindow.ViewModel.Log += $"Timestamp: {tempMsg.timestamp};   Delta: {tempMsg.deltaTime};   ID: 0x{tempMsg.id:X3};   Message: {tempMsg.data[0]:X2} {tempMsg.data[1]:X2} {tempMsg.data[2]:X2} {tempMsg.data[3]:X2} {tempMsg.data[4]:X2} {tempMsg.data[5]:X2} {tempMsg.data[6]:X2} {tempMsg.data[7]:X2};\n";
                         break;
 
                     case Canlib.canStatus.canERR_NOMSG:
@@ -92,6 +101,8 @@ namespace BMSMS.CAN
 
                         MainWindow.CurrentWindow.ViewModel.ToolConnected = true;
 
+                        int timerScaleUs = 1;
+                        Canlib.canIoCtl(handle, Canlib.canIOCTL_SET_TIMER_SCALE, out timerScaleUs); //set timer scale to 1us
                         return handle;
                     }
                 }
