@@ -444,8 +444,8 @@ namespace BMSMS.CAN
                 case CANMessageId.AccumulatorData:
                     MainWindow.CurrentWindow.ViewModel.stateOfCharge = (message.data[1] << 8 | message.data[0]) / 10f;
                     
-                    MainWindow.CurrentWindow.ViewModel.current = (message.data[5] << 8 | message.data[4]) / 100f; // cs low reading
-                    MainWindow.CurrentWindow.ViewModel.highCurrent = (message.data[3] << 8 | message.data[2]) / 100f; // cs high reading
+                    MainWindow.CurrentWindow.ViewModel.current = (short)(message.data[5] << 8 | message.data[4]) / 100f; // cs low reading
+                    MainWindow.CurrentWindow.ViewModel.highCurrent = (short)(message.data[3] << 8 | message.data[2]) / 100f; // cs high reading
                     MainWindow.CurrentWindow.ViewModel.tempFault = Convert.ToBoolean((message.data[6] >> 0) & 0b1);
                     MainWindow.CurrentWindow.ViewModel.voltageFault = Convert.ToBoolean((message.data[6] >> 1) & 0b1);
                     MainWindow.CurrentWindow.ViewModel.selfTestFail = Convert.ToBoolean((message.data[6] >> 2) & 0b1);
