@@ -36,18 +36,20 @@ namespace BMSMS.CAN
                     case Canlib.canStatus.canOK:
                         handleCANMessage(tempMsg);
                         MainWindow.CurrentWindow.ViewModel.MessageReceived = true;
-                        if(MainWindow.CurrentWindow.ViewModel.CanMessages.ContainsKey(tempMsg.id))
+                        MainViewModel._pool.WaitOne();
+                        if (MainViewModel.CanMessages.ContainsKey(tempMsg.id))
                         {
-                            tempMsg.deltaTime = tempMsg.timestamp - MainWindow.CurrentWindow.ViewModel.CanMessages[tempMsg.id].timestamp;
-                            MainWindow.CurrentWindow.ViewModel.CanMessages[tempMsg.id] = tempMsg;
+                            tempMsg.deltaTime = tempMsg.timestamp - MainViewModel.CanMessages[tempMsg.id].timestamp;
+                            MainViewModel.CanMessages[tempMsg.id] = tempMsg;
                         }
                         else
                         {
                             tempMsg.deltaTime = 0;
-                            MainWindow.CurrentWindow.ViewModel.CanMessages.Add(tempMsg.id, tempMsg);
+                            MainViewModel.CanMessages.Add(tempMsg.id, tempMsg);
                         }
                         if(MainWindow.CurrentWindow.ViewModel.logFile != null)
                             MainWindow.CurrentWindow.ViewModel.Log += $"Timestamp: {tempMsg.timestamp};   Delta: {tempMsg.deltaTime};   ID: 0x{tempMsg.id:X3};   Message: {tempMsg.data[0]:X2} {tempMsg.data[1]:X2} {tempMsg.data[2]:X2} {tempMsg.data[3]:X2} {tempMsg.data[4]:X2} {tempMsg.data[5]:X2} {tempMsg.data[6]:X2} {tempMsg.data[7]:X2};\n";
+                        MainViewModel._pool.Release();
                         break;
 
                     case Canlib.canStatus.canERR_NOMSG:
@@ -437,13 +439,13 @@ namespace BMSMS.CAN
                     MainWindow.CurrentWindow.ViewModel.Temperatures[43] = (message.data[6] << 8 | message.data[7]) / 10000f * MainViewModel.thermistorScale + MainViewModel.thermistorOffset;
                     break;                                                                                                  
                 case CANMessageId.Temp44:                                                                                   
-                    MainWindow.CurrentWindow.ViewModel.Temperatures[44] = (message.data[6] << 8 | message.data[7]) / 10000f * MainViewModel.thermistorScale + MainViewModel.thermistorOffset;
+                    MainWindow.CurrentWindow.ViewModel.Temperatures[44] = (message.data[0] << 8 | message.data[1]) / 10000f * MainViewModel.thermistorScale + MainViewModel.thermistorOffset;
                     break;
                 case CANMessageId.AccumulatorData:
                     MainWindow.CurrentWindow.ViewModel.stateOfCharge = (message.data[1] << 8 | message.data[0]) / 10f;
                     
-                    MainWindow.CurrentWindow.ViewModel.current = (sbyte)(message.data[5] << 8 | message.data[4]) / 100f; // cs low reading
-                    MainWindow.CurrentWindow.ViewModel.highCurrent = (sbyte)(message.data[3] << 8 | message.data[2]) / 100f; // cs high reading
+                    MainWindow.CurrentWindow.ViewModel.current = (message.data[5] << 8 | message.data[4]) / 100f; // cs low reading
+                    MainWindow.CurrentWindow.ViewModel.highCurrent = (message.data[3] << 8 | message.data[2]) / 100f; // cs high reading
                     MainWindow.CurrentWindow.ViewModel.tempFault = Convert.ToBoolean((message.data[6] >> 0) & 0b1);
                     MainWindow.CurrentWindow.ViewModel.voltageFault = Convert.ToBoolean((message.data[6] >> 1) & 0b1);
                     MainWindow.CurrentWindow.ViewModel.selfTestFail = Convert.ToBoolean((message.data[6] >> 2) & 0b1);

@@ -1,4 +1,6 @@
-﻿using BMSMS.Utilities;
+﻿using BMSMS.Constants;
+using BMSMS.Models;
+using BMSMS.Utilities;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -12,7 +14,7 @@ namespace BMSMS.CustomControls
 
         private double _temp;
         private ColorGradient tempGradient = new ColorGradient(0, 60, Color.Green, Color.Red, 255, false);
-
+        private MainViewModel ViewModel => MainWindow.CurrentWindow.ViewModel;
         public double Temp
         {
             get
@@ -23,7 +25,8 @@ namespace BMSMS.CustomControls
             {
                 _temp = value;
                 textBox.Text = value.ToString("0.00");
-                if(_temp != 0)
+
+                if (_temp != 0)
                 {
                     border.Background = new SolidColorBrush(tempGradient.getCurrentColor(_temp));
                 }

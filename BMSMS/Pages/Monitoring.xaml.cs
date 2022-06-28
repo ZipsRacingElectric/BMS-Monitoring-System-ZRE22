@@ -81,14 +81,13 @@ namespace BMSMS.Pages
         {
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,250);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 1);
 
             //IsEnabled defaults to false
             dispatcherTimer.Start();
             //IsEnabled should now be true after calling start
         }
 
-        public int test = 0;
         private void dispatcherTimer_Tick(object sender, object e)
         {
             double totalVoltage = 0;
@@ -103,31 +102,22 @@ namespace BMSMS.Pages
 
                 totalVoltage += ViewModel.CellVoltages[i];
 
-                if (voltages[i].Voltage < lowestVoltage && i < 36) //TODO: Remove the lt check after demo
+                if (voltages[i].Voltage < lowestVoltage)
                 {
                     lowestVoltage = voltages[i].Voltage;
                 }
 
-                if (voltages[i].Voltage > highestVoltage && i < 36) //TODO: Remove the lt check after demo
+                if (voltages[i].Voltage > highestVoltage)
                 {
                     highestVoltage = voltages[i].Voltage;
                 }
             }
 
-            List<int> demoThermistors = new List<int> { 0, 1, 4, 9, 10, 12, 13 };
             for (int i = 0; i < MainViewModel.totalThermistors; ++i)
             {
-                if (demoThermistors.Contains(i)) //TODO: Remove after demo
-                {
-                    //temperatures[i].Temp = ViewModel.Temperatures[i];
-                    temperatures[i].Temp = temperatures[i].Temp;
-                }
-                else
-                {
-                    temperatures[i].Temp = 0.00;
-                }
+                temperatures[i].Temp = ViewModel.Temperatures[i];
 
-                if (ViewModel.Temperatures[i] > highestTemp && demoThermistors.Contains(i)) //TODO: remove the offset check)
+                if (ViewModel.Temperatures[i] > highestTemp)
                 {
                     highestTemp = ViewModel.Temperatures[i];
                 }

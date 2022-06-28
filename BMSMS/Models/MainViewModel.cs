@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using Windows.UI.Core;
 
 namespace BMSMS.Models
@@ -50,6 +51,8 @@ namespace BMSMS.Models
 
         public Windows.Storage.StorageFile logFile = null;
 
-        public SortedDictionary<int, CANMessage> CanMessages = new SortedDictionary<int, CANMessage>();
+        public static SortedDictionary<int, CANMessage> CanMessages = new SortedDictionary<int, CANMessage>();
+
+        public static Semaphore _pool = new Semaphore(1, 1);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BMSMS.Models;
+﻿using BMSMS.CAN;
+using BMSMS.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -50,10 +51,21 @@ namespace BMSMS.Pages
             ViewModel.StaticLog = "====================================================================\n" +
                              "|   ID   |   D0 D1 D2 D3 D4 D5 D6 D7   |   Delta   |   Timestamp   |\n" +
                              "====================================================================";
-            foreach (var message in ViewModel.CanMessages)
+            try
             {
-                ViewModel.StaticLog += $"\n   0x{message.Value.id:X3}     {message.Value.data[0]:X2} {message.Value.data[1]:X2} {message.Value.data[2]:X2} {message.Value.data[3]:X2} {message.Value.data[4]:X2} {message.Value.data[5]:X2} {message.Value.data[6]:X2} {message.Value.data[7]:X2}    {message.Value.deltaTime}   {message.Value.timestamp}";
+                MainViewModel._pool.WaitOne();
+                foreach (var message in MainViewModel.CanMessages)
+                {
+                    ViewModel.StaticLog += $"\n   0x{message.Value.id:X3}     {message.Value.data[0]:X2} {message.Value.data[1]:X2} {message.Value.data[2]:X2} {message.Value.data[3]:X2} {message.Value.data[4]:X2} {message.Value.data[5]:X2} {message.Value.data[6]:X2} {message.Value.data[7]:X2}       {message.Value.deltaTime}           {message.Value.timestamp}";
+                }
             }
+            catch (Exception)
+            {
+
+                
+            }
+
+            MainViewModel._pool.Release();
 
             ViewModel.StaticLog += "\n====================================================================";
 

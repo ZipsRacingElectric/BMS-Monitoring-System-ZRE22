@@ -1,4 +1,6 @@
-﻿using Microsoft.UI;
+﻿using BMSMS.Constants;
+using BMSMS.Models;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
@@ -8,6 +10,7 @@ namespace BMSMS.CustomControls
     public sealed partial class VoltageCell : UserControl
     {
         public int CellNumber { get; set; }
+        private MainViewModel ViewModel => MainWindow.CurrentWindow.ViewModel;
 
         private double _voltage;
         public double Voltage
