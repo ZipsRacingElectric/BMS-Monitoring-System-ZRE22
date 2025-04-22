@@ -1,4 +1,4 @@
-# BMSMonitoringSystem
+# BMS Monitoring System
 
 Windows application to connect to the BMS through CAN and display the values being read.
 
